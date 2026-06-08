@@ -31,17 +31,25 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: LoginForm) => {
-    const { error } = await signIn(data.email, data.password);
-    if (error) {
-      if (error.includes('Invalid login credentials')) {
-        toast.error('Credenziali non valide. Controlla email e password.');
-      } else {
-        toast.error('Errore di accesso: ' + error);
+    try {
+      // Eseguiamo il login
+      const result = await signIn(data.email, data.password);
+
+      // Verifichiamo se il risultato contiene un errore
+      // (Adattalo in base a come il tuo auth-context restituisce l'errore)
+      if (result?.error) {
+        toast.error(result.error);
+        return; // isSubmitting tornerà false automaticamente grazie a react-hook-form
       }
-      return;
+
+      // Successo
+      toast.success('Accesso effettuato con successo');
+      router.push('/');
+      router.refresh(); // Importante per sincronizzare il server con la nuova sessione
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error('Si è verificato un errore inaspettato durante l\'accesso');
     }
-    toast.success('Accesso effettuato con successo');
-    router.push('/');
   };
 
   return (
