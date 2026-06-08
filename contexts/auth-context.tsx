@@ -29,11 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .select('*')
       .eq('id', userId)
       .maybeSingle();
-    if (error) {
-      console.error('fetchProfile error:', error);
-      return;
-    }
-    if (data) setProfile(data as Profile);
+    if (!error && data) setProfile(data as Profile);
   }, []);
 
   const refreshProfile = useCallback(async () => {

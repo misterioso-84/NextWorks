@@ -16,9 +16,6 @@ export default function Home() {
         router.replace('/login');
       } else if (profile) {
         router.replace(ROLE_DASHBOARD_PATHS[profile.role]);
-      } else {
-        // user authenticated but profile missing — sign out and show login
-        router.replace('/login');
       }
     }
   }, [user, profile, loading, router]);
