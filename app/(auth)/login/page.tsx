@@ -44,7 +44,7 @@ export default function LoginPage() {
 
       // Successo
       toast.success('Accesso effettuato con successo');
-      router.push('/');
+      window.location.href = '/';
       router.refresh(); // Importante per sincronizzare il server con la nuova sessione
     } catch (error) {
       console.error('Login error:', error);
